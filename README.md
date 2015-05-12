@@ -15,3 +15,7 @@ And then you can use script tags that load `.ts` files or even have `typescript`
     setTimeout(()=>console.log('hello'));
 </script>
 ```
+
+## Sample
+### Plunker
+http://plnkr.co/edit/j2pzXw?p=preview
