@@ -54,10 +54,16 @@
         } else {
             (function () {
                 var filename;
+                var compilerOptions;
                 for (num = 0; num < scripts.data.length; num++) {
                     filename = scripts.name[num] = scripts.name[num].slice(scripts.name[num].lastIndexOf('/') + 1);
-                    var src = scripts.data[num];
-                    source += ts.transpile(src);
+                    filename = scripts.name[num] = scripts.name[num].slice(scripts.name[num].lastIndexOf('/') + 1);
+                    if ("tsconfig.json" === filename) {
+                        compilerOptions = JSON.parse(scripts.data[num]).compilerOptions;
+                    } else {
+                        var src = scripts.data[num];
+                        source += ts.transpile(src,compilerOptions);
+                    }
                 }
             })();
         }
