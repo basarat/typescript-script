@@ -2,7 +2,7 @@
 Script tag support for TypeScript
 
 ## Usage
-Add the following lines at the bottom of your page: 
+Add the following lines at the bottom of your page to include 6MB of supporting scripts: 
 ```html
 <script src="https://rawgit.com/Microsoft/TypeScript/master/lib/typescriptServices.js"></script>
 <script src="https://rawgit.com/basarat/typescript-script/master/transpiler.js"></script>
