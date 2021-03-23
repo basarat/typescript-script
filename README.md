@@ -25,7 +25,7 @@ Optionally you can pass `compilerOptions` to the TypeScript transpiler:
 ```
 
 If you are not using a module loader and just need a quick hack if you attempt to export from your module add this to the bottom instead:
-```
+```html
 <script>var exports = {};</script>
 <script src="https://raw.githack.com/Microsoft/TypeScript/master/lib/typescriptServices.js"></script>
 <script src="https://raw.githack.com/basarat/typescript-script/master/transpiler.js"></script>
