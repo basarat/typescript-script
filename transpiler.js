@@ -7,11 +7,12 @@
         total: 0, //total number of scripts to be loaded
         loaded: 0, //current number of loaded scripts
         data: [], //file data
-        name: [] //file name
+        name: [], //file name
+        config: [] //file tsconfig compiler options
     };
 
     //Function loads each script and pushes its content into scripts.data
-    var load = function (url) {
+    var load = function (url, compilerOptions) {
         var xhr = window.ActiveXObject ? new window.ActiveXObject('Microsoft.XMLHTTP') : new window.XMLHttpRequest();;
         xhr.open('GET', url, true);
         if ('overrideMimeType' in xhr) xhr.overrideMimeType('text/plain');
@@ -21,6 +22,7 @@
                 scripts.loaded++;
                 scripts.data.push(xhr.responseText);
                 scripts.name.push(url);
+                scripts.config.push(JSON.parse(compilerOptions || "{}"));
                 if (scripts.loaded === scripts.total) compile();
                 return xhr.responseText;
             } else {
@@ -57,7 +59,8 @@
                 for (num = 0; num < scripts.data.length; num++) {
                     filename = scripts.name[num] = scripts.name[num].slice(scripts.name[num].lastIndexOf('/') + 1);
                     var src = scripts.data[num];
-                    source += ts.transpile(src);
+                    var compilerOptions = scripts.config[num];
+                    source += ts.transpile(src, compilerOptions);
                 }
             })();
         }
@@ -77,11 +80,12 @@
         for (i = 0; i < script.length; i++) {
             if (script[i].type == 'text/typescript') {
                 if (script[i].src) {
-                    scripts.total++
-                    load(script[i].src);
+                    scripts.total++;
+                    load(script[i].src, script[i].dataset.compilerOptions);
                 } else {
                     scripts.data.push(script[i].innerHTML);
                     scripts.name.push('innerHTML'+scripts.total);
+                    scripts.config.push(JSON.parse(script[i].dataset.compilerOptions || "{}"));
                     scripts.total++;
                     scripts.loaded++;
                 }
