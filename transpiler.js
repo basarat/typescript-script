@@ -73,8 +73,7 @@
             log: function () {}
         };
         var script = document.getElementsByTagName('script');
-        var i, src = [];
-        for (i = 0; i < script.length; i++) {
+        for (var i = 0; i < script.length; i++) {
             if (script[i].type == 'text/typescript') {
                 if (script[i].src) {
                     scripts.total++
