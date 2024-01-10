@@ -54,7 +54,7 @@
         } else {
             (function () {
                 var filename;
-                for (num = 0; num < scripts.data.length; num++) {
+                for (var num = 0; num < scripts.data.length; num++) {
                     filename = scripts.name[num] = scripts.name[num].slice(scripts.name[num].lastIndexOf('/') + 1);
                     var src = scripts.data[num];
                     source += ts.transpile(src);
