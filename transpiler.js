@@ -11,7 +11,7 @@
     };
 
     //Function loads each script and pushes its content into scripts.data
-    var load = function (url) {
+    var load = function (url, index) {
         var xhr = window.ActiveXObject ? new window.ActiveXObject('Microsoft.XMLHTTP') : new window.XMLHttpRequest();;
         xhr.open('GET', url, true);
         if ('overrideMimeType' in xhr) xhr.overrideMimeType('text/plain');
@@ -19,8 +19,8 @@
             if (xhr.readyState !== 4) return;
             if (xhr.status === 0 || xhr.status === 200) {
                 scripts.loaded++;
-                scripts.data.push(xhr.responseText);
-                scripts.name.push(url);
+                scripts.data[index] = xhr.responseText;
+                scripts.name[index] = url;
                 if (scripts.loaded === scripts.total) compile();
                 return xhr.responseText;
             } else {
@@ -77,10 +77,10 @@
             if (script[i].type == 'text/typescript') {
                 if (script[i].src) {
                     scripts.total++
-                    load(script[i].src);
+                    load(script[i].src, i);
                 } else {
-                    scripts.data.push(script[i].innerHTML);
-                    scripts.name.push('innerHTML'+scripts.total);
+                    scripts.data[i] = script[i].innerHTML;
+                    scripts.name[i] = 'innerHTML'+scripts.total;
                     scripts.total++;
                     scripts.loaded++;
                 }
